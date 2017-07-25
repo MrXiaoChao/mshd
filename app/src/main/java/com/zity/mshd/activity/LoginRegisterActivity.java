@@ -1,13 +1,11 @@
 package com.zity.mshd.activity;
 
-import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TextView;
 
 import com.zity.mshd.R;
 import com.zity.mshd.base.BaseActivity;
-import com.zity.mshd.fragment.HomePageFragment;
 import com.zity.mshd.fragment.LoginFragment;
 import com.zity.mshd.fragment.RegisterFragment;
 

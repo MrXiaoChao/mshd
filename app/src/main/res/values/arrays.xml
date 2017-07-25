@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="appealType">
+        <item>咨询</item>
+        <item>求助</item>
+        <item>意见</item>
+        <item>建议</item>
+        <item>投诉</item>
+        <item>举报</item>
+    </string-array>
+
+    <string-array name="appealStatus">
+        <item>水电煤气</item>
+        <item>公安消防</item>
+        <item>教育教学</item>
+        <item>公交问题</item>
+        <item>停车问题</item>
+        <item>供热问题</item>
+        <item>行政执法</item>
+        <item>效能建设</item>
+        <item>城市建设</item>
+        <item>劳保社保</item>
+        <item>通讯传媒</item>
+        <item>物业问题</item>
+        <item>发展改革</item>
+        <item>产权保障</item>
+        <item>环境保护</item>
+        <item>交通驾管</item>
+        <item>工商税务</item>
+        <item>民政问题</item>
+        <item>其他</item>
+    </string-array>
+
+</resources>

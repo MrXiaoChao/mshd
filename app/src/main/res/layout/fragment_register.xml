@@ -5,6 +5,7 @@
     android:background="@color/backgroundcolor"
     android:orientation="vertical">
     <LinearLayout
+        android:id="@+id/ll_personal"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
@@ -15,19 +16,25 @@
         <ImageView
             android:layout_marginLeft="12dp"
             android:layout_gravity="center_vertical"
-            android:background="@mipmap/username"
+            android:background="@mipmap/account_type_icon"
             android:layout_width="15dp"
             android:layout_height="15dp"/>
-        <EditText
-            android:numeric="integer"
+        <TextView
             android:textSize="13sp"
-            android:hint="账号类型"
+            android:text="账号类型"
             android:background="@null"
             android:layout_weight="1"
             android:layout_marginLeft="12dp"
-            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_account_type"
+            android:textSize="13sp"
+            android:layout_marginRight="10dp"
+            android:text="个人"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -40,11 +47,11 @@
         <ImageView
             android:layout_marginLeft="12dp"
             android:layout_gravity="center_vertical"
-            android:background="@mipmap/username"
+            android:background="@mipmap/user_name_icon"
             android:layout_width="15dp"
             android:layout_height="15dp"/>
         <EditText
-            android:numeric="integer"
+            android:id="@+id/et_name"
             android:textSize="13sp"
             android:hint="请输入姓名"
             android:background="@null"
@@ -65,10 +72,11 @@
         <ImageView
             android:layout_marginLeft="12dp"
             android:layout_gravity="center_vertical"
-            android:background="@mipmap/username"
+            android:background="@mipmap/phone_icon"
             android:layout_width="15dp"
             android:layout_height="15dp"/>
         <EditText
+            android:id="@+id/et_phone"
             android:numeric="integer"
             android:textSize="13sp"
             android:hint="请输入手机号"
@@ -90,19 +98,41 @@
         <ImageView
             android:layout_marginLeft="12dp"
             android:layout_gravity="center_vertical"
-            android:background="@mipmap/username"
+            android:background="@mipmap/captcha_icon"
             android:layout_width="15dp"
             android:layout_height="15dp"/>
+        <LinearLayout
+            android:background="@color/backgroundcolor"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <View
+                android:background="@color/white"
+                android:layout_width="12dp"
+                android:layout_height="match_parent"/>
+
         <EditText
+            android:id="@+id/et_security_code"
+            android:background="@drawable/btn_login_yzm"
+            android:layout_marginRight="5dp"
             android:numeric="integer"
             android:textSize="13sp"
             android:hint="输入验证码"
-            android:background="@null"
             android:layout_weight="1"
-            android:layout_marginLeft="12dp"
             android:layout_gravity="center_vertical"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
+        <Button
+            android:id="@+id/btn_security_code"
+            android:textColor="@color/white"
+            android:text="获取验证码"
+            android:background="@drawable/btn_login1"
+            android:layout_gravity="center_vertical"
+            android:layout_width="108dp"
+            android:layout_height="40dp"/>
+        </LinearLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -115,11 +145,11 @@
         <ImageView
             android:layout_marginLeft="12dp"
             android:layout_gravity="center_vertical"
-            android:background="@mipmap/username"
+            android:background="@mipmap/password"
             android:layout_width="15dp"
             android:layout_height="15dp"/>
         <EditText
-            android:numeric="integer"
+            android:id="@+id/et_password"
             android:textSize="13sp"
             android:hint="设置密码"
             android:background="@null"
@@ -140,11 +170,11 @@
         <ImageView
             android:layout_marginLeft="12dp"
             android:layout_gravity="center_vertical"
-            android:background="@mipmap/username"
+            android:background="@mipmap/confirm_password_icon"
             android:layout_width="15dp"
             android:layout_height="15dp"/>
         <EditText
-            android:numeric="integer"
+            android:id="@+id/et_confirm_password"
             android:textSize="13sp"
             android:hint="确认密码"
             android:background="@null"
@@ -156,6 +186,8 @@
     </LinearLayout>
 
     <TextView
+        android:visibility="invisible"
+        android:id="@+id/tv_toast"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="50dp"
         android:textColor="@color/red"
@@ -163,6 +195,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
+        android:textSize="16sp"
+        android:id="@+id/btn_register"
         android:textColor="@color/white"
         android:background="@drawable/btn_login1"
         android:layout_marginTop="12dp"

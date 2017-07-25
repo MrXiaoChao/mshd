@@ -5,4 +5,5 @@ package com.zity.mshd.app;
  */
 
 public class appConstant {
+    public static String USER="user";
 }
