@@ -10,10 +10,9 @@ import com.blankj.utilcode.utils.ToastUtils;
 import com.zity.mshd.R;
 import com.zity.mshd.app.App;
 import com.zity.mshd.base.BaseActivity;
-import com.zity.mshd.fragment.AppealFragment;
 import com.zity.mshd.fragment.HomePageFragment;
 import com.zity.mshd.fragment.MineFragment;
-import com.zity.mshd.fragment.ProgressFragment;
+import com.zity.mshd.fragment.MyAppealFragment;
 import com.zity.mshd.fragment.PublicServiceFragment;
 
 import butterknife.BindView;
@@ -23,10 +22,8 @@ public class MainActivity extends BaseActivity{
 
     @BindView(R.id.tv_homepae)
     TextView tvHomepae;
-    @BindView(R.id.tv_appeal)
-    TextView tvAppeal;
-    @BindView(R.id.tv_progress)
-    TextView tvProgress;
+    @BindView(R.id.tv_myappeal)
+    TextView tvMyAppeal;
     @BindView(R.id.tv_public_service)
     TextView tvPublicService;
     @BindView(R.id.tv_mine)
@@ -35,8 +32,7 @@ public class MainActivity extends BaseActivity{
     FrameLayout fragmentContainer;
     private long backtime=0;
     private HomePageFragment homePageFragment;
-    private AppealFragment appealFragment;
-    private ProgressFragment progressFragment;
+    private MyAppealFragment myAppealFragment;
     private PublicServiceFragment publicServiceFragment;
     private MineFragment mineFragment;
 
@@ -49,6 +45,12 @@ public class MainActivity extends BaseActivity{
     @Override
     protected void initData() {
         defaultSelected();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     //默认选中
@@ -68,8 +70,7 @@ public class MainActivity extends BaseActivity{
     //重置所有文本的选中状态
     public void selected() {
         tvHomepae.setSelected(false);
-        tvAppeal.setSelected(false);
-        tvProgress.setSelected(false);
+        tvMyAppeal.setSelected(false);
         tvPublicService.setSelected(false);
         tvMine.setSelected(false);
     }
@@ -79,11 +80,8 @@ public class MainActivity extends BaseActivity{
         if (homePageFragment != null) {
             transaction.hide(homePageFragment);
         }
-        if (appealFragment != null) {
-            transaction.hide(appealFragment);
-        }
-        if (progressFragment != null) {
-            transaction.hide(progressFragment);
+        if (myAppealFragment != null) {
+            transaction.hide(myAppealFragment);
         }
         if (publicServiceFragment != null) {
             transaction.hide(publicServiceFragment);
@@ -93,7 +91,7 @@ public class MainActivity extends BaseActivity{
         }
     }
 
-    @OnClick({R.id.tv_homepae, R.id.tv_appeal,R.id.tv_progress,R.id.tv_public_service, R.id.tv_mine})
+    @OnClick({R.id.tv_homepae,R.id.tv_myappeal,R.id.tv_public_service, R.id.tv_mine})
     public void onClick(View view) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
@@ -108,24 +106,15 @@ public class MainActivity extends BaseActivity{
                     transaction.show(homePageFragment);
                 }
                 break;
-            case R.id.tv_appeal:
+
+            case R.id.tv_myappeal:
                 selected();
-                tvAppeal.setSelected(true);
-                if (appealFragment == null) {
-                    appealFragment = new AppealFragment();
-                    transaction.add(R.id.fragment_container, appealFragment);
+                tvMyAppeal.setSelected(true);
+                if (myAppealFragment == null) {
+                    myAppealFragment = new MyAppealFragment();
+                    transaction.add(R.id.fragment_container, myAppealFragment);
                 } else {
-                    transaction.show(appealFragment);
-                }
-                break;
-            case R.id.tv_progress:
-                selected();
-                tvProgress.setSelected(true);
-                if (progressFragment == null) {
-                    progressFragment = new ProgressFragment();
-                    transaction.add(R.id.fragment_container, progressFragment);
-                } else {
-                    transaction.show(progressFragment);
+                    transaction.show(myAppealFragment);
                 }
                 break;
             case R.id.tv_public_service:
@@ -166,4 +155,36 @@ public class MainActivity extends BaseActivity{
         }
         return super.onKeyUp(keyCode, event);
     }
+
+
+    //切换到诉求页面的方法
+    public void selectProgress(){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
+        selected();
+        tvMyAppeal.setSelected(true);
+        if (myAppealFragment == null) {
+            myAppealFragment = new MyAppealFragment();
+            transaction.add(R.id.fragment_container, myAppealFragment);
+        } else {
+            transaction.show(myAppealFragment);
+        }
+        transaction.commit();
+    }
+
+    //切换到服务页面的方法
+    public void selectService(){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
+        selected();
+        tvPublicService.setSelected(true);
+        if (publicServiceFragment == null) {
+            publicServiceFragment = new PublicServiceFragment();
+            transaction.add(R.id.fragment_container, publicServiceFragment);
+        } else {
+            transaction.show(publicServiceFragment);
+        }
+        transaction.commit();
+    }
+
 }

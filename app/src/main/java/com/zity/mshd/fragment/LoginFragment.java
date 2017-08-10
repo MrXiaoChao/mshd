@@ -1,11 +1,15 @@
 package com.zity.mshd.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,7 +28,9 @@ import com.zity.mshd.base.BaseFragment;
 import com.zity.mshd.bean.User;
 import com.zity.mshd.http.GsonRequest;
 import com.zity.mshd.http.UrlPath;
+import com.zity.mshd.widegt.BanCNandEmpty;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +53,10 @@ public class LoginFragment extends BaseFragment {
     TextView tvToast;
     @BindView(R.id.btn_login)
     Button btnLogin;
+    @BindView(R.id.cb_passworld)
+    CheckBox cb_passworld;
     private Animation shake;
+    private SharedPreferences sp1;
 
 
     @Override
@@ -57,7 +66,16 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        sp1 = getActivity().getSharedPreferences("userdata",Context.MODE_PRIVATE);
+        if(sp1.getBoolean("IsCheck",true)){
+            //设置默认是记录密码状态
+            cb_passworld.setChecked(true);
+            etPhone.setText(sp1.getString("UserName", ""));
+            etPassword.setText(sp1.getString("Password", ""));
+        }
         shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+        //禁止输入中文跟空格
+        BanCNandEmpty.newInstance().banCNandEmpty(etPassword);
     }
 
 
@@ -65,42 +83,42 @@ public class LoginFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_forget_password:
-                Intent intent =new Intent(getActivity(), ForgetPasswordActivity.class);
+                Intent intent = new Intent(getActivity(), ForgetPasswordActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_login:
                 //动态隐藏软键盘
                 KeyboardUtils.hideSoftInput(getActivity());
-                String phone =etPhone.getText().toString().trim();
-                String password=etPassword.getText().toString().trim();
-                if (EmptyUtils.isEmpty(phone)){
+                String phone = etPhone.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
+                if (EmptyUtils.isEmpty(phone)) {
                     tvToast.setVisibility(View.VISIBLE);
                     tvToast.setText("请输入账号！");
                     tvToast.startAnimation(shake);
                     etPhone.requestFocus();
                     return;
                 }
-                if (!RegexUtils.isMobileExact(phone)){
+                if (!RegexUtils.isMobileExact(phone)) {
                     tvToast.setVisibility(View.VISIBLE);
                     tvToast.setText("请输入正确的手机号码！");
                     tvToast.startAnimation(shake);
                     etPhone.requestFocus();
                     return;
                 }
-                if (EmptyUtils.isEmpty(password)){
+                if (EmptyUtils.isEmpty(password)) {
                     tvToast.setVisibility(View.VISIBLE);
                     tvToast.setText("请输入密码！");
                     tvToast.startAnimation(shake);
                     etPassword.requestFocus();
                     return;
                 }
-                getDataFromData(phone,password);
+                getDataFromData(phone, password);
                 break;
         }
     }
 
     //登录
-    private void getDataFromData(String phone, String password) {
+    private void getDataFromData(final String phone, final String password) {
         Map<String, String> map = new HashMap<>();
         map.put("phone", phone);
         map.put("password", password);
@@ -108,12 +126,23 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void onResponse(User user) {
                 if (user.isSuccess()) {
-                    SPUtils sp =new SPUtils("user");
-                    sp.putString("phone",user.getPhone());
-                    sp.putString("address",user.getAddress());
-                    sp.putString("name",user.getName());
-                    sp.putString("gender",user.getGender());
-                    sp.putString("userid",user.getUserid());
+                    SPUtils sp = new SPUtils("user");
+                    sp.putString("phone", user.getPhone());
+                    sp.putString("address", user.getAddress());
+                    sp.putString("name", user.getName());
+                    sp.putString("gender", user.getGender());
+                    sp.putString("userid", user.getUserid());
+                    if(cb_passworld.isChecked())
+                    {
+                        //记住用户名、密码、
+                        SharedPreferences.Editor editor = sp1.edit();
+                        editor.putString("UserName", phone);
+                        editor.putString("Password",password);
+                        editor.commit();
+                        sp1.edit().putBoolean("IsCheck", true).commit();
+                    }else {
+                        sp1.edit().putBoolean("IsCheck", false).commit();
+                    }
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                 } else {
@@ -125,9 +154,14 @@ public class LoginFragment extends BaseFragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String a =error.getMessage();
+                String a = error.getMessage();
             }
         });
         App.getInstance().getHttpQueue().add(request);
     }
+
+
 }
+
+
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 背景色 -->
+
+    <!-- 没选中状态 -->
+    <item
+        android:drawable="@drawable/xing" android:layout_height="wrap_content"  />
+    <!-- 选中状态 -->
+    <item
+        android:drawable="@drawable/xing1" android:layout_height="wrap_content"  />
+</layer-list>

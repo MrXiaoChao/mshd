@@ -29,7 +29,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="你打尽快拿到拿到哪里打开那了电脑萨拉丁那大叔大酸奶粉酸奶粉"
                 android:textColor="#707070"
                 android:textSize="13sp" />
 
@@ -43,7 +42,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="andadna"
                     android:textColor="#BCB7AB"
                     android:textSize="11sp" />
 
@@ -53,7 +51,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="andadna"
                     android:textColor="#BCB7AB"
                     android:textSize="11sp" />
             </RelativeLayout>

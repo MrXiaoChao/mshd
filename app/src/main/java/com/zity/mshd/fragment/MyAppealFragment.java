@@ -1,14 +1,13 @@
 package com.zity.mshd.fragment;
 
-import android.os.Handler;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -18,13 +17,13 @@ import com.blankj.utilcode.utils.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.zity.mshd.R;
+import com.zity.mshd.activity.ProgressInfo;
 import com.zity.mshd.adapter.ProgressAdapter;
 import com.zity.mshd.app.App;
 import com.zity.mshd.base.BaseFragment;
 import com.zity.mshd.bean.Progress;
 import com.zity.mshd.http.GsonRequest;
 import com.zity.mshd.http.UrlPath;
-import com.zity.mshd.widegt.CustomLoadMoreView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,11 +34,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 进度
+ * 进度 我的诉求
  * Created by luochao on 2017/7/18.
  */
 
-public class ProgressFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class MyAppealFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.iv_toolbar_back)
     ImageView ivToolbarBack;
     @BindView(R.id.tv_tooltar_title)
@@ -55,19 +54,24 @@ public class ProgressFragment extends BaseFragment implements SwipeRefreshLayout
     private static final int PAGE_SIZE = 6;
     private List<Progress.ListBean> progressList = new ArrayList<>();
     private String phone;
+    private String userid;
+    private ProgressDialog progressDialog;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_progress;
+        return R.layout.fragment_myappeal;
     }
 
     @Override
     protected void initData() {
-        SPUtils sp = new SPUtils("user");
+        ivToolbarBack.setVisibility(View.GONE);
+        setProgress();
+        final SPUtils sp = new SPUtils("user");
         phone = sp.getString("phone");
+        userid = sp.getString("userid");
         initAdapter();
 //         addHeadView();
-        getListFromData(phone);
+        getListFromData(phone, userid);
     }
 
     private void initAdapter() {
@@ -83,7 +87,9 @@ public class ProgressFragment extends BaseFragment implements SwipeRefreshLayout
         rvProgress.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ToastUtils.showShortToast("点击了" + position);
+                Intent intent = new Intent(getActivity(), ProgressInfo.class);
+                intent.putExtra("id", progressList.get(position).getAppealId());
+                startActivity(intent);
             }
         });
     }
@@ -96,11 +102,12 @@ public class ProgressFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-        if (progressList != null && progressList.size() > 0) {
-            adapter.setNewData(progressList);
-        } else {
-            getListFromData(phone);
-        }
+//        if (progressList != null && progressList.size() > 0) {
+//            adapter.setNewData(progressList);
+//        } else {
+//
+//        }
+        getListFromData(phone, userid);
         swipeLayout.setRefreshing(false);
         adapter.setEnableLoadMore(true);
     }
@@ -138,9 +145,10 @@ public class ProgressFragment extends BaseFragment implements SwipeRefreshLayout
 //    }
 
     //从服务器获取列表数据
-    private void getListFromData(String phone) {
+    private void getListFromData(String phone, String userid) {
         Map<String, String> map = new HashMap<>();
         map.put("phone", phone);
+        map.put("userId", userid);
         GsonRequest<Progress> request = new GsonRequest<Progress>(Request.Method.POST, map, UrlPath.PROGRESS_LIST, Progress.class, new Response.Listener<Progress>() {
             @Override
             public void onResponse(Progress progress) {
@@ -148,9 +156,10 @@ public class ProgressFragment extends BaseFragment implements SwipeRefreshLayout
                     progressList = progress.getList();
                     adapter = new ProgressAdapter(R.layout.item_progress, progress.getList());
                     rvProgress.setAdapter(adapter);
-                }else {
+                } else {
                     ToastUtils.showShortToast("该用户无数据");
                 }
+                cancelProgress();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -159,6 +168,18 @@ public class ProgressFragment extends BaseFragment implements SwipeRefreshLayout
             }
         });
         App.getInstance().getHttpQueue().add(request);
+    }
+
+
+    private void setProgress() {
+        progressDialog = new ProgressDialog(mContext);
+        progressDialog.setMessage("正在加载中...");
+        progressDialog.setCancelable(true);
+        progressDialog.show();
+    }
+
+    private void cancelProgress() {
+        progressDialog.dismiss();
     }
 
 }

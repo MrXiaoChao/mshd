@@ -22,6 +22,7 @@ import com.zity.mshd.bean.Success;
 import com.zity.mshd.bean.Success1;
 import com.zity.mshd.http.GsonRequest;
 import com.zity.mshd.http.UrlPath;
+import com.zity.mshd.widegt.BanCNandEmpty;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,6 +78,10 @@ public class ChangePasswordActivity extends BaseActivity {
         SPUtils sp =new SPUtils("user");
         phone = sp.getString("phone");
         tvPhoneNumber.setText(phone);
+        //禁止输入中文跟空格
+        BanCNandEmpty.newInstance().banCNandEmpty(etPassword);
+        //禁止输入中文跟空格
+        BanCNandEmpty.newInstance().banCNandEmpty(etConfirmPassword);
     }
 
 

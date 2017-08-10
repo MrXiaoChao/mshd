@@ -59,6 +59,19 @@
             android:layout_gravity="center_vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
+
+
+        <TextView
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:id="@+id/tv_useinfo"
+            android:textSize="13sp"
+            android:paddingLeft="15dp"
+            android:background="@drawable/ll_personal_info"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <RelativeLayout

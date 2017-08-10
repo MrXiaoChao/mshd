@@ -35,6 +35,7 @@ import com.zity.mshd.widegt.GetJsonDataUtil;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,6 +64,8 @@ public class ChangePersonalInfoActivity extends BaseActivity {
     TextView tvAddress;
     @BindView(R.id.rl_address)
     RelativeLayout rlAddress;
+    @BindView(R.id.tv_useinfo)
+    TextView tv_useinfo;
     private String nameorphone;
     private String address;
     private String userid;
@@ -107,6 +110,7 @@ public class ChangePersonalInfoActivity extends BaseActivity {
             }
         }
     };
+    private String gender1;
 
     @Override
     protected int getLayout() {
@@ -134,9 +138,11 @@ public class ChangePersonalInfoActivity extends BaseActivity {
             tvTooltarTitle.setText("账号");
             etUseinfo.setText(phone);
         } else if (StringUtils.equals("3", flag)) {
+            tv_useinfo.setVisibility(View.VISIBLE);
+            etUseinfo.setVisibility(View.GONE);
             llPersonalInfo.setVisibility(View.VISIBLE);
             tvTooltarTitle.setText("性别");
-            etUseinfo.setText(gender);
+            tv_useinfo.setText(gender);
         } else {
             rlAddress.setVisibility(View.VISIBLE);
             tvTooltarTitle.setText("地址");
@@ -145,7 +151,7 @@ public class ChangePersonalInfoActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_toolbar_back, R.id.tv_right_save, R.id.ll_personal_info, R.id.rl_address})
+    @OnClick({R.id.iv_toolbar_back, R.id.tv_right_save, R.id.ll_personal_info, R.id.rl_address,R.id.tv_useinfo})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_toolbar_back:
@@ -175,12 +181,8 @@ public class ChangePersonalInfoActivity extends BaseActivity {
                     }
                     changePhone(userid, nameorphone);
                 } else if (StringUtils.equals("3", flag)) {
-                    if (EmptyUtils.isEmpty(nameorphone)) {
-                        ToastUtils.showShortToast("请输入姓别");
-                        etUseinfo.requestFocus();
-                        return;
-                    }
-                    if (StringUtils.equals("男", nameorphone)) {
+                    gender1 = tv_useinfo.getText().toString().trim();
+                    if (StringUtils.equals("男", gender1)) {
                         nameorphone1 = "1";
                     } else {
                         nameorphone1 = "2";
@@ -202,6 +204,16 @@ public class ChangePersonalInfoActivity extends BaseActivity {
                 }else {
                     Toast.makeText(ChangePersonalInfoActivity.this,"数据暂未解析成功，请等待",Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.tv_useinfo:
+                OptionsPickerView pickerView = new OptionsPickerView.Builder(ChangePersonalInfoActivity.this, new OptionsPickerView.OnOptionsSelectListener() {
+                    @Override
+                    public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                        tv_useinfo.setText(getResources().getStringArray(R.array.gender)[options1]);
+                    }
+                }).setTitleText("性别").build();
+                pickerView.setPicker(Arrays.asList(getResources().getStringArray(R.array.gender)));
+                pickerView.show();
                 break;
         }
     }
@@ -261,7 +273,7 @@ public class ChangePersonalInfoActivity extends BaseActivity {
     }
 
     //修改性别
-    private void changeGender(String id, String gender) {
+    private void changeGender(String id,  String gender) {
         Map<String, String> map = new HashMap<>();
         map.put("id", id);
         map.put("gender", gender);
@@ -271,7 +283,7 @@ public class ChangePersonalInfoActivity extends BaseActivity {
                 if (success.isSuccess()) {
                     ToastUtils.showShortToast(success.getMessage());
                     Intent intent = new Intent();
-                    intent.putExtra("gender", nameorphone);
+                    intent.putExtra("gender", gender1);
                     setResult(10003, intent);
                     onBackPressedSupport();
                 } else {

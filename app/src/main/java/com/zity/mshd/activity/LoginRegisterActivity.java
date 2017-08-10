@@ -66,7 +66,7 @@ public class LoginRegisterActivity extends BaseActivity {
         transaction.commit();
     }
     //默认选中
-    private void defaultSelected(){
+   public void defaultSelected(){
         selected();
         tvLogin.setSelected(true);
         FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();

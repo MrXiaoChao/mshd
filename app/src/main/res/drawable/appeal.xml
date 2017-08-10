@@ -9,5 +9,5 @@
     </stroke>
     <!-- 矩形的圆角半径 -->
     <corners
-        android:radius="6dp"/>
+        android:radius="3dp"/>
 </shape>

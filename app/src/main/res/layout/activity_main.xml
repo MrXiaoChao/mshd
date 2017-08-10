@@ -5,7 +5,7 @@
     <LinearLayout
         android:id="@+id/ll_menu"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:background="#ffffff"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
@@ -17,36 +17,22 @@
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:drawablePadding="1dp"
             android:drawableTop="@drawable/tab_menu_homepage"
             android:gravity="center"
             android:text="首页"
             android:textColor="@drawable/tv_menu_color"
             android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/tv_appeal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:drawablePadding="1dp"
-            android:drawableTop="@drawable/tab_menu_appeal"
-            android:gravity="center"
-            android:text="诉求"
-            android:textColor="@drawable/tv_menu_color"
-            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/tv_progress"
+            android:id="@+id/tv_myappeal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:drawablePadding="1dp"
-            android:drawableTop="@drawable/tab_menu_progress"
+            android:drawableTop="@drawable/tab_menu_myappeal"
             android:gravity="center"
-            android:text="进度"
+            android:text="我的诉求"
             android:textColor="@drawable/tv_menu_color"
             android:textSize="12sp" />
         <TextView
@@ -55,7 +41,6 @@
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:drawablePadding="1dp"
             android:drawableTop="@drawable/tab_menu_public_service"
             android:gravity="center"
             android:text="公共服务"
@@ -67,7 +52,6 @@
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:drawablePadding="1dp"
             android:drawableTop="@drawable/tab_menu_mine"
             android:gravity="center"
             android:text="我的"

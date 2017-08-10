@@ -11,4 +11,10 @@
     <color name="white">#FFFFFF</color>
     <color name="backgroundcolor">#F5F5F5</color>
     <color name="red">#FC4936</color>
+    <color name="Progressred">#FF0000</color>
+    <color name="Progressred1">#EDAA2B</color>
+    <color name="Progressblack">#333333</color>
+
+    <color name="lan">#89CA49</color>
+
 </resources>

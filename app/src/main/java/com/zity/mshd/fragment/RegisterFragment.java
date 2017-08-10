@@ -23,12 +23,15 @@ import com.blankj.utilcode.utils.RegexUtils;
 import com.blankj.utilcode.utils.StringUtils;
 import com.blankj.utilcode.utils.ToastUtils;
 import com.zity.mshd.R;
+import com.zity.mshd.activity.LoginRegisterActivity;
 import com.zity.mshd.app.App;
 import com.zity.mshd.base.BaseFragment;
 import com.zity.mshd.bean.Register;
 import com.zity.mshd.bean.Success;
 import com.zity.mshd.http.GsonRequest;
 import com.zity.mshd.http.UrlPath;
+import com.zity.mshd.widegt.BanCNandEmpty;
+import com.zity.mshd.widegt.MyDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,6 +94,10 @@ public class RegisterFragment extends BaseFragment {
     @Override
     protected void initData() {
         shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+        //禁止输入中文跟空格
+        BanCNandEmpty.newInstance().banCNandEmpty(etPassword);
+        //禁止输入中文跟空格
+        BanCNandEmpty.newInstance().banCNandEmpty(etConfirmPassword);
     }
 
 
@@ -140,6 +147,7 @@ public class RegisterFragment extends BaseFragment {
                 getSecurityCode(phone);
                 break;
             case R.id.btn_register:
+                showExitDialog("注册成功");
                 KeyboardUtils.hideSoftInput(getActivity());
                 String name1 =etName.getText().toString().trim();
                 String phone1=etPhone.getText().toString().trim();
@@ -240,7 +248,7 @@ public class RegisterFragment extends BaseFragment {
             @Override
             public void onResponse(Register register) {
                 if (register.isSuccess()){
-                    ToastUtils.showShortToast("注册成功");
+                    showExitDialog("注册成功");
                 }else {
                     ToastUtils.showShortToast(register.getMessage());
                 }
@@ -258,5 +266,25 @@ public class RegisterFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         timer.cancel();
+    }
+    private void showExitDialog(String msg) {
+        final MyDialog dialog = new MyDialog(getActivity());
+        dialog.setTitle("提示");
+        dialog.setMessage(msg);
+        dialog.setYesOnclickListener("去登录", new MyDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                LoginRegisterActivity activity = (LoginRegisterActivity) getActivity();
+                activity.defaultSelected();
+                dialog.dismiss();
+            }
+        });
+        dialog.setNoOnclickListener("取消", new MyDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

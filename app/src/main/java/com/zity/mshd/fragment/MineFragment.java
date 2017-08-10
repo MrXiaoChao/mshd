@@ -14,7 +14,10 @@ import com.blankj.utilcode.utils.StringUtils;
 import com.zity.mshd.R;
 import com.zity.mshd.activity.ChangePasswordActivity;
 import com.zity.mshd.activity.ChangePersonalInfoActivity;
+import com.zity.mshd.activity.LoginRegisterActivity;
+import com.zity.mshd.activity.WebViewActivity;
 import com.zity.mshd.base.BaseFragment;
+import com.zity.mshd.widegt.MyDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +54,8 @@ public class MineFragment extends BaseFragment {
     RelativeLayout rlChangePassword;
     @BindView(R.id.rl_about_our)
     RelativeLayout rlAboutOur;
+    @BindView(R.id.rl_login)
+    RelativeLayout rl_login;
     private String name;
     private String address;
     private String phone;
@@ -82,7 +87,7 @@ public class MineFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.rl_name, R.id.rl_gender, R.id.rl_account, R.id.rl_address, R.id.rl_change_password, R.id.rl_about_our})
+    @OnClick({R.id.rl_name, R.id.rl_gender, R.id.rl_account, R.id.rl_address, R.id.rl_change_password, R.id.rl_about_our,R.id.rl_login})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_name:
@@ -99,10 +104,11 @@ public class MineFragment extends BaseFragment {
                 startActivityForResult(intent_gender,20003);
                 break;
             case R.id.rl_account:
-                Intent intent_account =new Intent(getActivity(), ChangePersonalInfoActivity.class);
-                intent_account.putExtra("flag","2");
-                intent_account.putExtra("phone",phone);
-                startActivityForResult(intent_account,20002);
+                //账号不能修改
+//                Intent intent_account =new Intent(getActivity(), ChangePersonalInfoActivity.class);
+//                intent_account.putExtra("flag","2");
+//                intent_account.putExtra("phone",phone);
+//                startActivityForResult(intent_account,20002);
                 break;
             case R.id.rl_address:
                 String pastAddress=tvAddress.getText().toString().trim();
@@ -116,6 +122,13 @@ public class MineFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.rl_about_our:
+                Intent intent1=new Intent(getActivity(), WebViewActivity.class);
+                intent1.putExtra("title","关于我们");
+                intent1.putExtra("URL","http://211.151.183.170:9081/views/front/appAbout_us.jsp");
+                startActivity(intent1);
+                break;
+            case R.id.rl_login:
+                showExitDialog("您确定要退出吗？");
                 break;
         }
     }
@@ -136,5 +149,26 @@ public class MineFragment extends BaseFragment {
             String address = data.getStringExtra("address");
             tvAddress.setText(address);
         }
+    }
+
+    private void showExitDialog(String msg) {
+        final MyDialog dialog = new MyDialog(getActivity());
+        dialog.setTitle("提示");
+        dialog.setMessage(msg);
+        dialog.setYesOnclickListener("去登录", new MyDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                LoginRegisterActivity activity = (LoginRegisterActivity) getActivity();
+                activity.defaultSelected();
+                dialog.dismiss();
+            }
+        });
+        dialog.setNoOnclickListener("取消", new MyDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

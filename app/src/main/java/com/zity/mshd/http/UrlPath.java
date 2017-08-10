@@ -1,7 +1,7 @@
 package com.zity.mshd.http;
 
 /**
- * Created by luochao on 2017/4/14.
+ * Created by luochao on 2017/6/14.
  * 接口地址
  */
 
@@ -21,4 +21,14 @@ public class UrlPath {
     public static String BANNER_IMAGE=BaseUrl+"/interface/queryHomeImg.do";
     //获取进度列表
     public static String PROGRESS_LIST=BaseUrl+"/interface/getMyAll.do?";
+    //获取医疗列表
+    public static String YILIAO=BaseUrl+"/interface/publicQuery.do?";
+    //公共服务详情
+    public static String GGFUXQ=BaseUrl+"/interface/getPublicById.do?";
+    //提诉求
+    public static String LEFT_APPEAL=BaseUrl+"/interface/save.do?";
+    //进度详情
+    public static String PROGRESS_XQ=BaseUrl+"/interface/getById.do?";
+    //提交品论
+    public static String MAKE_COMMENT=BaseUrl+"/interface/evaluate.do?";
 }
