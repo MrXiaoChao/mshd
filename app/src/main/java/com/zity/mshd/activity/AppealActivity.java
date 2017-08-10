@@ -208,7 +208,7 @@ public class AppealActivity extends BaseActivity implements View.OnTouchListener
             case  R.id.tv_appeal_xuzhi:
                 Intent intent1=new Intent(mContext, WebViewActivity.class);
                 intent1.putExtra("title","诉求须知");
-                intent1.putExtra("URL","http://211.151.183.170:9081/views/front/appNotice.jsp");
+                intent1.putExtra("URL","http://211.151.183.170:9081/views/app/appNotice.jsp");
                 startActivity(intent1);
                 break;
             case R.id.iv_toolbar_back:

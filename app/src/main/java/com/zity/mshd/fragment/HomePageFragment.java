@@ -16,6 +16,7 @@ import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 import com.zity.mshd.R;
 import com.zity.mshd.activity.AppealActivity;
+import com.zity.mshd.activity.CommonActivity;
 import com.zity.mshd.activity.MainActivity;
 import com.zity.mshd.activity.WebViewActivity;
 import com.zity.mshd.app.App;
@@ -93,7 +94,7 @@ public class HomePageFragment extends BaseFragment implements SwipeRefreshLayout
             @Override
             public void OnBannerClick(int position) {
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
-                intent.putExtra("URL", "http://211.151.183.170:9081/views/front/appImgDetail.jsp?id=" + list.get(position).getImgId());
+                intent.putExtra("URL", "http://211.151.183.170:9081/views/app/appImgDetail.jsp?id=" + list.get(position).getImgId());
                 startActivity(intent);
             }
         });
@@ -138,10 +139,19 @@ public class HomePageFragment extends BaseFragment implements SwipeRefreshLayout
                 startActivity(intent_jubao);
                 break;
             case R.id.tv_bszn://办事指南
+                Intent intent_bszn =new Intent(getActivity(), CommonActivity.class);
+                intent_bszn.putExtra("title","办事指南");
+                startActivity(intent_bszn);
                 break;
             case R.id.tv_zcfg://政策法规
+                Intent intent_zcfg =new Intent(getActivity(), CommonActivity.class);
+                intent_zcfg.putExtra("title","政策法规");
+                startActivity(intent_zcfg);
                 break;
             case R.id.tv_tzgg://通知公告
+                Intent intent_txgg =new Intent(getActivity(), CommonActivity.class);
+                intent_txgg.putExtra("title","通知公告");
+                startActivity(intent_txgg);
                 break;
             case R.id.tv_yiliao://医疗
                 EventBus.getDefault().post(new MessageEvent("0"));

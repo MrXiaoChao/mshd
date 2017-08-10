@@ -12,6 +12,8 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -64,6 +66,8 @@
                     android:textSize="13sp" />
 
                 <EditText
+                    android:hint="最多只输入80字"
+                    android:maxLength="80"
                     android:gravity="top"
                     android:id="@+id/et_appeal_content"
                     android:layout_width="match_parent"
@@ -74,7 +78,7 @@
                     android:layout_marginTop="6dp"
                     android:padding="3dp"
                     android:background="@drawable/appeal_content"
-                    android:textSize="13sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <RelativeLayout
@@ -168,6 +172,7 @@
                     android:textSize="13sp" />
 
                 <EditText
+                    android:maxLength="10"
                     android:id="@+id/et_appeal_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -196,6 +201,7 @@
                     android:textSize="13sp" />
 
                 <EditText
+                    android:maxLength="11"
                     android:id="@+id/et_appeal_phone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

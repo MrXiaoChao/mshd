@@ -124,7 +124,7 @@ public class MineFragment extends BaseFragment {
             case R.id.rl_about_our:
                 Intent intent1=new Intent(getActivity(), WebViewActivity.class);
                 intent1.putExtra("title","关于我们");
-                intent1.putExtra("URL","http://211.151.183.170:9081/views/front/appAbout_us.jsp");
+                intent1.putExtra("URL","http://211.151.183.170:9081/views/app/appAbout_us.jsp");
                 startActivity(intent1);
                 break;
             case R.id.rl_login:

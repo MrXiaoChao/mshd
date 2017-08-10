@@ -31,4 +31,10 @@ public class UrlPath {
     public static String PROGRESS_XQ=BaseUrl+"/interface/getById.do?";
     //提交品论
     public static String MAKE_COMMENT=BaseUrl+"/interface/evaluate.do?";
+    //办事指南
+    public static String  GUIDE=BaseUrl+"/interface/queryGuide.do";
+    //政策法规
+    public static String POLICY=BaseUrl+"/interface/queryPolicy.do";
+    //通知公告
+    public static String NOTICE=BaseUrl+"/interface/queryAnnouncement.do";
 }

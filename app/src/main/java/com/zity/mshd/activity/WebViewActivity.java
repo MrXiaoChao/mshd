@@ -47,7 +47,7 @@ public class WebViewActivity extends BaseActivity {
         }else if (StringUtils.equals("诉求须知",title )) {
             tvTooltarTitle.setText("诉求须知");
         } else {
-            tvTooltarTitle.setText("新闻详情");
+            tvTooltarTitle.setText(title);
         }
         init(URL);
     }

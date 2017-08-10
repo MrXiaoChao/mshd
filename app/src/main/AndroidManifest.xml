@@ -34,6 +34,7 @@
         <activity android:name=".activity.MakeCommentActivity" />
         <activity android:name=".fragment.HomePageFragment1" />
         <activity android:name=".activity.AppealActivity" />
+        <activity android:name=".activity.CommonActivity" />
     </application>
 
 </manifest>
