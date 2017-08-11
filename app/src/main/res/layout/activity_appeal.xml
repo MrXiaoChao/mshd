@@ -36,6 +36,8 @@
                     android:textSize="13sp" />
 
                 <EditText
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:id="@+id/et_appeal_title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -66,8 +68,10 @@
                     android:textSize="13sp" />
 
                 <EditText
-                    android:hint="最多只输入80字"
-                    android:maxLength="80"
+                    android:scrollbars="vertical"
+                    android:lines="4"
+                    android:hint="最多只输入150字"
+                    android:maxLength="150"
                     android:gravity="top"
                     android:id="@+id/et_appeal_content"
                     android:layout_width="match_parent"

@@ -155,7 +155,7 @@ public class MineFragment extends BaseFragment {
         final MyDialog dialog = new MyDialog(getActivity());
         dialog.setTitle("提示");
         dialog.setMessage(msg);
-        dialog.setYesOnclickListener("去登录", new MyDialog.onYesOnclickListener() {
+        dialog.setYesOnclickListener("确定", new MyDialog.onYesOnclickListener() {
             @Override
             public void onYesClick() {
                 LoginRegisterActivity activity = (LoginRegisterActivity) getActivity();

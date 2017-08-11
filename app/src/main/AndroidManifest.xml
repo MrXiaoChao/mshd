@@ -8,7 +8,7 @@
     <application
         android:name=".app.App"
         android:allowBackup="true"
-        android:icon="@mipmap/minsheng"
+        android:icon="@mipmap/icon30"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -32,7 +32,6 @@
         <activity android:name=".activity.WebViewActivity" />
         <activity android:name=".activity.ProgressInfo" />
         <activity android:name=".activity.MakeCommentActivity" />
-        <activity android:name=".fragment.HomePageFragment1" />
         <activity android:name=".activity.AppealActivity" />
         <activity android:name=".activity.CommonActivity" />
     </application>

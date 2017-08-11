@@ -28,6 +28,7 @@
             android:background="@drawable/timelline_dot_first" />
 
         <TextView
+            android:id="@+id/tvBottom"
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:layout_below="@id/tvDot"

@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.utils.ToastUtils;
@@ -39,24 +41,23 @@ public class ProgressXqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private Context context;
 
-    public ProgressXqAdapter(Context context, List<ProgressXQ.ZtBean> list,ProgressXQ progressXQ) {
+    public ProgressXqAdapter(Context context, List<ProgressXQ.ZtBean> list, ProgressXQ progressXQ) {
         inflater = LayoutInflater.from(context);
         this.list = list;
-        this.context=context;
-        this.progressXQ=progressXQ;
+        this.context = context;
+        this.progressXQ = progressXQ;
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         if (viewType == TYPE_1) {
             return new ViewHolder1(inflater.inflate(R.layout.item_progress_xq1, parent, false));
         } else if (viewType == TYPE_2) {
             return new ViewHolder2(inflater.inflate(R.layout.item_progress_xq2, parent, false));
         } else if (viewType == TYPE_4) {
             return new ViewHolder4(inflater.inflate(R.layout.item_progress_xq4, parent, false));
-        }else {
+        } else {
             return new ViewHolder3(inflater.inflate(R.layout.item_progress_xq3, parent, false));
         }
 
@@ -67,15 +68,41 @@ public class ProgressXqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (holder instanceof ViewHolder1) {
             ViewHolder1 viewHolder1 = (ViewHolder1) holder;
             viewHolder1.bindHolder(list.get(position));
+
+            if (position == list.size() - 1 || position == 0) {
+                viewHolder1.tvBottom.setVisibility(View.GONE);
+            }
+            if (position==0){
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) viewHolder1.rlTimeline.getLayoutParams();
+                lp.setMargins(0, 25, 0, 0);
+                viewHolder1.rlTimeline.setLayoutParams(lp);
+            }
+
         } else if (holder instanceof ViewHolder2) {
             ViewHolder2 viewHolder2 = (ViewHolder2) holder;
             viewHolder2.bindHolder(list.get(position));
-        }  else if (holder instanceof ViewHolder4) {
+
+            if (list.get(position).getTasstatus().equals("6")&&position==0){
+                viewHolder2.tvTopLine.setVisibility(View.GONE);
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) viewHolder2.rlTimeline.getLayoutParams();
+                lp.setMargins(0, 25, 0, 0);
+                viewHolder2.rlTimeline.setLayoutParams(lp);
+            }
+
+        } else if (holder instanceof ViewHolder4) {
             ViewHolder4 viewHolder4 = (ViewHolder4) holder;
             viewHolder4.bindHolder(list.get(position));
-        }else if (holder instanceof ViewHolder3){
+
+        } else if (holder instanceof ViewHolder3) {
             ViewHolder3 viewHolder3 = (ViewHolder3) holder;
             viewHolder3.bindHolder(list.get(position));
+            if (position == 0) {
+                viewHolder3.tvTopLine.setVisibility(View.GONE);
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) viewHolder3.rlTimeline.getLayoutParams();
+                lp.setMargins(0, 25, 0, 0);
+                viewHolder3.rlTimeline.setLayoutParams(lp);
+            }
+
         }
     }
 
@@ -91,37 +118,44 @@ public class ProgressXqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return TYPE_1;
         } else if (list.get(position).getTasstatus().equals("8")) {
             return TYPE_3;
-        }else if (list.get(position).getTasstatus().equals("7")) {
+        } else if (list.get(position).getTasstatus().equals("7")) {
             return TYPE_4;
-        }  else {
+        } else if (list.get(position).getTasstatus().equals("9")) {//评价已完成的状态
+            return TYPE_4;
+        } else {
             return TYPE_2;
         }
 
     }
 
     public class ViewHolder1 extends RecyclerView.ViewHolder {
-        private TextView tvcontent, tvtime;
+        private TextView tvcontent, tvtime, tvTopLine, tvBottom;
+        private RelativeLayout rlTimeline;
 
 
         public ViewHolder1(View itemView) {
             super(itemView);
             tvcontent = (TextView) itemView.findViewById(R.id.tv_content);
             tvtime = (TextView) itemView.findViewById(R.id.tv_time);
+            tvTopLine = (TextView) itemView.findViewById(R.id.tvTopLine);
+            tvBottom = (TextView) itemView.findViewById(R.id.tvBottom);
+            rlTimeline = (RelativeLayout) itemView.findViewById(R.id.rlTimeline);
         }
 
         public void bindHolder(ProgressXQ.ZtBean ztBean) {
             tvcontent.setText(ztBean.getTascontent());
             tvtime.setText(ztBean.getTascreatetime());
-            if (ztBean.getTasstatus().equals("2")){
+            if (ztBean.getTasstatus().equals("2")) {
                 tvcontent.setTextColor(context.getResources().getColor(R.color.lan));
-            }else if (ztBean.getTasstatus().equals("6")){
+            } else if (ztBean.getTasstatus().equals("6")) {
                 tvcontent.setTextColor(context.getResources().getColor(R.color.Progressred));
             }
         }
     }
 
     public class ViewHolder2 extends RecyclerView.ViewHolder {
-        private TextView tvcontent, tvtime, tvOrgname;
+        private TextView tvcontent, tvtime, tvOrgname, tvTopLine, tvBottom;
+        private RelativeLayout rlTimeline;
 
 
         public ViewHolder2(View itemView) {
@@ -129,36 +163,39 @@ public class ProgressXqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             tvcontent = (TextView) itemView.findViewById(R.id.tv_content);
             tvtime = (TextView) itemView.findViewById(R.id.tv_time);
             tvOrgname = (TextView) itemView.findViewById(R.id.tv_orgname);
+            tvTopLine = (TextView) itemView.findViewById(R.id.tvTopLine);
+            tvBottom = (TextView) itemView.findViewById(R.id.tvBottom);
+            rlTimeline = (RelativeLayout) itemView.findViewById(R.id.rlTimeline);
         }
 
         public void bindHolder(ProgressXQ.ZtBean ztBean) {
             tvtime.setText(ztBean.getTascreatetime());
             tvOrgname.setText(ztBean.getOrg_name());
-            if (ztBean.getTasstatus().equals("4")){
-                StringBuffer stringBuffer =new StringBuffer("补充：");
+            if (ztBean.getTasstatus().equals("4")) {
+                StringBuffer stringBuffer = new StringBuffer("补充：");
                 stringBuffer.append(ztBean.getTascontent());
                 SpannableStringBuilder style = new SpannableStringBuilder(stringBuffer);
                 style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.Progressblack)), 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvcontent.setText(style);
-            }else if (ztBean.getTasstatus().equals("3")){
-                StringBuffer stringBuffer =new StringBuffer("答复：");
+            } else if (ztBean.getTasstatus().equals("3")) {
+                StringBuffer stringBuffer = new StringBuffer("答复：");
                 stringBuffer.append(ztBean.getTascontent());
                 SpannableStringBuilder style = new SpannableStringBuilder(stringBuffer);
                 style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.Progressblack)), 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvcontent.setText(style);
-            }else if (ztBean.getTasstatus().equals("5")){
-                StringBuffer stringBuffer =new StringBuffer("退回：");
+            } else if (ztBean.getTasstatus().equals("5")) {
+                StringBuffer stringBuffer = new StringBuffer("退回：");
                 stringBuffer.append(ztBean.getTascontent());
                 SpannableStringBuilder style = new SpannableStringBuilder(stringBuffer);
                 style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.Progressblack)), 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvcontent.setText(style);
-            }else if (ztBean.getTasstatus().equals("6")){
-                StringBuffer stringBuffer =new StringBuffer("无效：");
+            } else if (ztBean.getTasstatus().equals("6")) {
+                StringBuffer stringBuffer = new StringBuffer("无效：");
                 stringBuffer.append(ztBean.getTascontent());
                 SpannableStringBuilder style = new SpannableStringBuilder(stringBuffer);
                 style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.Progressblack)), 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvcontent.setText(style);
-            }else {
+            } else {
                 tvcontent.setText(ztBean.getTascontent());
             }
         }
@@ -166,8 +203,9 @@ public class ProgressXqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
     public class ViewHolder3 extends RecyclerView.ViewHolder {
-        private TextView tvcontent, tvtime;
+        private TextView tvcontent, tvtime, tvTopLine;
         private com.zity.mshd.widegt.RatingBar ratingBar;
+        private RelativeLayout rlTimeline;
 
 
         public ViewHolder3(View itemView) {
@@ -175,6 +213,8 @@ public class ProgressXqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             tvcontent = (TextView) itemView.findViewById(R.id.tv_content);
             tvtime = (TextView) itemView.findViewById(R.id.tv_time);
             ratingBar = (com.zity.mshd.widegt.RatingBar) itemView.findViewById(R.id.ratingbar);
+            tvTopLine = (TextView) itemView.findViewById(R.id.tvTopLine);
+            rlTimeline = (RelativeLayout) itemView.findViewById(R.id.rlTimeline);
         }
 
         public void bindHolder(ProgressXQ.ZtBean ztBean) {
@@ -186,7 +226,7 @@ public class ProgressXqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public class ViewHolder4 extends RecyclerView.ViewHolder {
-        private TextView tvcontent, tvtime;
+        private TextView tvcontent, tvtime, tvTopLine, tvBottom;
         private Button btn_progress;
 
 
@@ -195,18 +235,25 @@ public class ProgressXqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             tvcontent = (TextView) itemView.findViewById(R.id.tv_content);
             tvtime = (TextView) itemView.findViewById(R.id.tv_time);
             btn_progress = (Button) itemView.findViewById(R.id.btn_progress);
+            tvTopLine = (TextView) itemView.findViewById(R.id.tvTopLine);
+            tvBottom = (TextView) itemView.findViewById(R.id.tvBottom);
         }
 
         public void bindHolder(final ProgressXQ.ZtBean ztBean) {
             tvcontent.setText(ztBean.getTascontent());
             tvtime.setText(ztBean.getTascreatetime());
+            if (ztBean.getTasstatus().equals("9")) {
+                btn_progress.setEnabled(false);
+                btn_progress.setBackgroundResource(R.drawable.progress_text1);
+                btn_progress.setText("已评价");
+            }
             btn_progress.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent =new Intent(context, MakeCommentActivity.class);
-                    intent.putExtra("title",progressXQ.getTitle());
-                    intent.putExtra("time",progressXQ.getCreatetime());
-                    intent.putExtra("id",progressXQ.getAppealId());
+                    Intent intent = new Intent(context, MakeCommentActivity.class);
+                    intent.putExtra("title", progressXQ.getTitle());
+                    intent.putExtra("time", progressXQ.getCreatetime());
+                    intent.putExtra("id", progressXQ.getAppealId());
                     context.startActivity(intent);
                 }
             });
